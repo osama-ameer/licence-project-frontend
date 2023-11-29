@@ -1,0 +1,15 @@
+.snippet-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-btn{
+    cursor: pointer;
+}
+
+.hover-text:hover{
+    cursor: pointer;
+    color: rgb(65, 65, 126);
+    text-decoration: underline;
+}

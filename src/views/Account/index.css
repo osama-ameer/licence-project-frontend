@@ -1,0 +1,13 @@
+.create-btn{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.icons_style {
+    font-size: 18px;
+}
+
+.icons_style:hover{
+    cursor: pointer;
+}

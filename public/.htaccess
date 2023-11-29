@@ -1,0 +1,8 @@
+Options +SymLinksIfOwnerMatch
+Options -Indexes
+RewriteEngine On
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^ /build/index.html [L]

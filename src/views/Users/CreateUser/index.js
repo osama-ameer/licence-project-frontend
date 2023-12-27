@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../services/api";
-import { Button, Form, Input, Spin, message } from "antd";
+import { Button, DatePicker, Form, Input, Spin, message } from "antd";
+import dayjs from "dayjs";
+const { RangePicker } = DatePicker;
 
-const CreateLicense = () => {
+const CreateUser = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [license, setLicense] = useState();
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (params?.id !== "create") fetchLicense();
+    if (params?.id !== "create") fetchUser();
   }, [params]);
 
-  const fetchLicense = async () => {
+  const fetchUser = async () => {
     setLoading(true);
     try {
-      let response = await api.get(`/license/${params?.id}`);
-      setLicense(response?.data?.license);
+      let response = await api.get(`/users/${params?.id}`);
+      setUser(response?.data?.user);
     } catch (error) {
       console.log("Error", error.message);
     } finally {
@@ -26,14 +28,14 @@ const CreateLicense = () => {
     }
   };
 
-  const createLicense = async (values) => {
+  const createUser = async (values) => {
     setLoading(true);
 
     try {
-      let response = await api.post(`/license/`, values);
+      let response = await api.post(`/users/`, values);
       if (response?.status === 200) {
-        message.success("License created!");
-        navigate(`/license`);
+        message.success("User created!");
+        navigate(`/users`);
       }
     } catch (error) {
       console.log("Error: ", error.message);
@@ -42,13 +44,13 @@ const CreateLicense = () => {
     }
   };
 
-  const editLicense = async (values) => {
+  const editUser = async (values) => {
     setLoading(true);
     try {
-      let response = await api.put(`/license/${params?.id}`, values);
+      let response = await api.put(`/users/${params?.id}`, values);
       if (response?.status === 200) {
-        message.success("License updated!");
-        navigate(`/license`);
+        message.success("User updated!");
+        navigate(`/account`);
       }
     } catch (error) {
       console.log("Error: ", error.message);
@@ -94,22 +96,25 @@ const CreateLicense = () => {
     <Spin spinning={loading}>
       {params?.id !== "create" ? (
         <>
-          {license && (
+          {user && (
             <Form
               {...formItemLayout}
               form={form}
               name="register"
-              onFinish={params?.id !== "create" ? editLicense : createLicense}
-              initialValues={license}
+              onFinish={params?.id !== "create" ? editUser : createUser}
+              initialValues={{
+                ...user,
+                // expiryDate: new Date(account?.expiryDate),
+              }}
               scrollToFirstError
             >
               <Form.Item
                 name="name"
-                label="License Name"
+                label="User Name"
                 rules={[
                   {
                     required: true,
-                    message: "Please input license name!",
+                    message: "Please input User name!",
                     whitespace: true,
                   },
                 ]}
@@ -118,12 +123,26 @@ const CreateLicense = () => {
               </Form.Item>
 
               <Form.Item
-                name="description"
-                label="License Description"
+                name="email"
+                label="Email"
                 rules={[
                   {
                     required: true,
-                    message: "Please input license description!",
+                    message: "Please input email Type!",
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                label="Enter Password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input password!",
                     whitespace: true,
                   },
                 ]}
@@ -131,18 +150,13 @@ const CreateLicense = () => {
                 <Input />
               </Form.Item>
 
-              <Form.Item name="cost" label="License Cost">
-                <Input />
-              </Form.Item>
-
               <Form.Item
-                name="durationType"
-                label="Duration Type"
+                name="account"
+                label="Account Id "
                 rules={[
                   {
                     required: true,
-                    message: "Please input duration type!",
-                    whitespace: true,
+                    message: "Please input Account Id!",
                   },
                 ]}
               >
@@ -150,7 +164,7 @@ const CreateLicense = () => {
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
-                <Button onClick={() => navigate(`/license`)}>Cancel</Button>
+                <Button onClick={() => navigate(`/users`)}>Cancel</Button>
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -167,17 +181,17 @@ const CreateLicense = () => {
           {...formItemLayout}
           form={form}
           name="register"
-          onFinish={params?.id !== "create" ? editLicense : createLicense}
-          initialValues={license}
+          onFinish={params?.id !== "create" ? editUser : createUser}
+          initialValues={user}
           scrollToFirstError
         >
           <Form.Item
             name="name"
-            label="License Name"
+            label="User Name"
             rules={[
               {
                 required: true,
-                message: "Please input license name!",
+                message: "Please input User name!",
                 whitespace: true,
               },
             ]}
@@ -186,12 +200,26 @@ const CreateLicense = () => {
           </Form.Item>
 
           <Form.Item
-            name="description"
-            label="License Description"
+            name="email"
+            label="Email"
             rules={[
               {
                 required: true,
-                message: "Please input license description!",
+                message: "Please input email Type!",
+                type: "email",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="Enter Password"
+            rules={[
+              {
+                required: true,
+                message: "Please input password!",
                 whitespace: true,
               },
             ]}
@@ -200,27 +228,12 @@ const CreateLicense = () => {
           </Form.Item>
 
           <Form.Item
-            name="cost"
-            label="License Cost"
+            name="account"
+            label="Account Id "
             rules={[
               {
                 required: true,
-                message: "Please input license cost!",
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="durationType"
-            label="Duration Type"
-            rules={[
-              {
-                required: true,
-                message: "Please input duration type!",
-                whitespace: true,
+                message: "Please input Account Id!",
               },
             ]}
           >
@@ -228,7 +241,7 @@ const CreateLicense = () => {
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>
-            <Button onClick={() => navigate(`/license`)}>Cancel</Button>
+            <Button onClick={() => navigate(`/users`)}>Cancel</Button>
             <Button
               type="primary"
               htmlType="submit"
@@ -243,4 +256,4 @@ const CreateLicense = () => {
   );
 };
 
-export default CreateLicense;
+export default CreateUser;

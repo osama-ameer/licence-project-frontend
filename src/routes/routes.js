@@ -1,4 +1,5 @@
 import React from "react";
+import Setting from "../views/Setting";
 
 const Dashboard = React.lazy(() => import("../views/Dashboard"));
 const License = React.lazy(() => import("../views/License"));
@@ -16,6 +17,10 @@ const AccountDetail = React.lazy(() =>
 const CreateAccount = React.lazy(() =>
   import("../views/Account/CreateAccount")
 );
+
+const Users = React.lazy(() => import("../views/Users"));
+const UserDetail = React.lazy(() => import("../views/Users/UserDetail"));
+const CreateUser = React.lazy(() => import("../views/Users/CreateUser"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -38,6 +43,17 @@ const routes = [
     name: "AccountDetail",
     element: AccountDetail,
   },
+
+  // User Routes
+  { path: "/users", name: "Users", element: Users },
+  { path: "/user/:id", name: "Create User", element: CreateUser },
+  {
+    path: "/view-user/:id",
+    name: "UserDetail",
+    element: UserDetail,
+  },
+
+  { path: "/settings", name: "Settings", element: Setting },
 ];
 
 export default routes;

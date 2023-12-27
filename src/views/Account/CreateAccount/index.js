@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../services/api";
-import { Button, Form, Input, Spin, message } from "antd";
+import { Button, DatePicker, Form, Input, Spin, message } from "antd";
+import dayjs from "dayjs";
+const { RangePicker } = DatePicker;
 
 const CreateAccount = () => {
   const params = useParams();
@@ -18,7 +20,11 @@ const CreateAccount = () => {
     setLoading(true);
     try {
       let response = await api.get(`/account/${params?.id}`);
-      setAccount(response?.data?.account);
+      let updatedAcc = {
+        ...response?.data?.account,
+        expiryDate: dayjs(response?.data?.account?.expiryDate),
+      };
+      setAccount(updatedAcc);
     } catch (error) {
       console.log("Error", error.message);
     } finally {
@@ -55,6 +61,12 @@ const CreateAccount = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // eslint-disable-next-line arrow-body-style
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current < dayjs().endOf("day");
   };
 
   const formItemLayout = {
@@ -100,7 +112,10 @@ const CreateAccount = () => {
               form={form}
               name="register"
               onFinish={params?.id !== "create" ? editAccount : createAccount}
-              initialValues={account}
+              initialValues={{
+                ...account,
+                // expiryDate: new Date(account?.expiryDate),
+              }}
               scrollToFirstError
             >
               <Form.Item
@@ -187,31 +202,11 @@ const CreateAccount = () => {
                 <Input />
               </Form.Item>
 
-              <Form.Item
-                name="maxUsers"
-                label="Max Users"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input max users!",
-                    whitespace: true,
-                  },
-                ]}
-              >
+              <Form.Item name="maxUsers" label="Max Users">
                 <Input />
               </Form.Item>
 
-              <Form.Item
-                name="usageCounter"
-                label="Usage Counter"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Usage Counter!",
-                    whitespace: true,
-                  },
-                ]}
-              >
+              <Form.Item name="usageCounter" label="Usage Counter">
                 <Input />
               </Form.Item>
 
@@ -227,6 +222,13 @@ const CreateAccount = () => {
                 ]}
               >
                 <Input />
+              </Form.Item>
+              <Form.Item name="expiryDate" label="Expiry Date">
+                <DatePicker
+                  format="YYYY-MM-DD "
+                  // disabledDate={disabledDate}
+                  style={{ width: "100%" }}
+                />
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
@@ -354,9 +356,9 @@ const CreateAccount = () => {
             label="Usage Counter"
             rules={[
               {
-                required: true,
+                required: false,
                 message: "Please input Usage Counter!",
-                whitespace: true,
+                whitespace: false,
               },
             ]}
           >
@@ -375,6 +377,14 @@ const CreateAccount = () => {
             ]}
           >
             <Input />
+          </Form.Item>
+
+          <Form.Item name="expiryDate" label="Expiry Date">
+            <DatePicker
+              format="YYYY-MM-DD "
+              // disabledDate={disabledDate}
+              style={{ width: "100%" }}
+            />
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>

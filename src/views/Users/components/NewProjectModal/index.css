@@ -1,0 +1,9 @@
+.snippet-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-btn{
+    cursor: pointer;
+}

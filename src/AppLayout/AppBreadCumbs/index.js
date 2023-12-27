@@ -5,6 +5,8 @@ import { Breadcrumb } from "antd";
 const breadcrumbNameMap = {
   "/dashboard": "Home",
   "/license": "Licenses",
+  "/users": "Users",
+  "/settings": "Settings",
 };
 const AppBreadCumbs = () => {
   const location = useLocation();

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { DesktopOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  DesktopOutlined,
+  HomeOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 const { Sider } = Layout;
@@ -16,6 +21,8 @@ const items = [
   getItem("Home", "/dashboard", <HomeOutlined />),
   getItem("Licenses", "/license", <DesktopOutlined />),
   getItem("Accounts", "/account", <DesktopOutlined />),
+  getItem("Users", "/users", <UserOutlined />),
+  getItem("Settings", "/settings", <SettingOutlined />),
 ];
 const AppSidebar = () => {
   const [collapsed, setCollapsed] = useState(false);

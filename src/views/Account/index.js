@@ -25,9 +25,15 @@ const Account = () => {
       key: "name",
     },
     {
+      title: "Company Name",
+      dataIndex: "company",
+      key: "company",
+    },
+
+    {
       title: "License Status",
-      dataIndex: "licenceStatus",
-      key: "licenceStatus",
+      dataIndex: "status",
+      key: "status",
     },
 
     {
@@ -39,12 +45,12 @@ const Account = () => {
           <EyeOutlined
             title="View"
             className="icons_style"
-            onClick={() => navigate(`/view-account/${record._id}`)}
+            onClick={() => navigate(`/view-account/${record.name}`)}
           />
           <EditOutlined
             title="Edit"
             className="icons_style"
-            onClick={() => navigate(`/account/${record?._id}`)}
+            onClick={() => navigate(`/account/${record?.name}`)}
           />
           <DeleteOutlined
             title="Delete"

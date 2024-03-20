@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const generateCode = (project) => {
   let URL = "http://159.65.156.228/demo-script/main.js";
 
@@ -29,8 +31,7 @@ export const generateCode = (project) => {
 };
 
 export function generateRandomString(length) {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let randomString = "";
 
   for (let i = 0; i < length; i++) {
@@ -40,3 +41,8 @@ export function generateRandomString(length) {
 
   return randomString;
 }
+
+export const getDate = (date) => {
+  let newDate = moment(date).format("DD MMMM, YYYY HH:MM:SS ");
+  return newDate;
+};

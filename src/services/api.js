@@ -2,7 +2,8 @@ import axios from "axios";
 import { clearLocalStorage, getItemFromLocalStorage } from "./localStorage";
 
 export const api = axios.create({
-  baseURL: "https://api-license.itdesktop.net/api/",
+  // https://weary-tights-newt.cyclic.app/api/
+  baseURL: "http://localhost:5000/api/",
   headers: {
     "Content-type": "application/json",
   },

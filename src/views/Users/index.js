@@ -6,7 +6,8 @@ import { api } from "../../services/api";
 import { getItemFromLocalStorage } from "../../services/localStorage";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { generateCode } from "../../services/utils";
+import { generateCode, getDate } from "../../services/utils";
+import moment from "moment";
 const { confirm } = Modal;
 
 const Users = () => {
@@ -28,6 +29,13 @@ const Users = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+    },
+
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (value) => getDate(value),
     },
 
     {

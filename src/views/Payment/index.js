@@ -62,7 +62,7 @@ function Payment() {
 
     let body = {
       plan_id: plan?.id,
-      start_time: "2023-12-07T16:24:00Z",
+      start_time: "2024-12-19T16:24:00Z",
       custom_id: accId,
       subscriber: {
         name: { given_name: "John", surname: "Doe" },

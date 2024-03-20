@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
+import moment from "moment";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -60,9 +61,22 @@ const PaymentSuccess = () => {
           },
         }
       );
+      const myNextBillingTime = response?.data?.billing_info?.next_billing_time;
 
+      const dayOfMonth = moment(myNextBillingTime).date();
+      let expiryDate;
+
+      if ([29, 30, 31].includes(dayOfMonth)) {
+        expiryDate = moment(myNextBillingTime)
+          .add(1, "months")
+          .startOf("month")
+          .toDate();
+      } else {
+        expiryDate = moment(myNextBillingTime).toDate();
+      }
       let values = {
-        expiryDate: response?.data?.billing_info?.next_billing_time,
+        expiryDate: expiryDate,
+        status: "ok",
       };
       updateAccount(response?.data?.custom_id, values);
     } catch (error) {

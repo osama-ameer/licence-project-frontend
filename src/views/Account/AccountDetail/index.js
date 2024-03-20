@@ -5,6 +5,7 @@ import { api } from "../../../services/api";
 import { ArrowLeftOutlined, CopyOutlined } from "@ant-design/icons";
 import { Row, Col, Input, message } from "antd";
 import "./index.css";
+import moment from "moment";
 
 const { TextArea } = Input;
 const AccountDetail = () => {
@@ -29,7 +30,8 @@ const AccountDetail = () => {
   }, [params]);
 
   const handleBack = () => navigate(-1);
-
+  // Company, Contact Name, Email, Country, Software Type, Account Id,
+  // Licence Status, Max Users, Usage Counter, Expiry Status, Expiry Date.
   return (
     <Spin spinning={loading}>
       <div>
@@ -38,40 +40,52 @@ const AccountDetail = () => {
         </Button>
         <Row gutter={[16, 16]}>
           <Col lg={12} xs={24}>
-            <h3>Account Name</h3>
-            <p>{account?.name}</p>
-          </Col>
-          <Col lg={12} xs={24}>
-            <h3>Software Type</h3>
-            <p>{account?.softwareType}</p>
-          </Col>
-          <Col lg={12} xs={24}>
-            <h3>License Status</h3>
-            <p>{account?.licenceStatus}</p>
-          </Col>
-          <Col lg={12} xs={24}>
             <h3>Company</h3>
             <p>{account?.company}</p>
-          </Col>
-          <Col lg={12} xs={24}>
-            <h3>Country</h3>
-            <p>{account?.country}</p>
           </Col>
           <Col lg={12} xs={24}>
             <h3>Contact Name</h3>
             <p>{account?.contactName}</p>
           </Col>
           <Col lg={12} xs={24}>
-            <h3>Usage Counter</h3>
-            <p>{account?.usageCounter}</p>
+            <h3>Email</h3>
+            <p>{account?.account_email ?? "-"}</p>
+          </Col>
+
+          <Col lg={12} xs={24}>
+            <h3>Country</h3>
+            <p>{account?.country}</p>
+          </Col>
+
+          <Col lg={12} xs={24}>
+            <h3>Software Type</h3>
+            <p>{account?.softwareType}</p>
+          </Col>
+          <Col lg={12} xs={24}>
+            <h3>Account Id</h3>
+            <p>{account?.name}</p>
+          </Col>
+
+          <Col lg={12} xs={24}>
+            <h3>License Status</h3>
+            <p>{account?.licenceStatus}</p>
           </Col>
           <Col lg={12} xs={24}>
             <h3>Max Users</h3>
             <p>{account?.maxUsers}</p>
           </Col>
           <Col lg={12} xs={24}>
+            <h3>Usage Counter</h3>
+            <p>{account?.usageCounter}</p>
+          </Col>
+
+          <Col lg={12} xs={24}>
             <h3>Account Status</h3>
             <p>{account?.status}</p>
+          </Col>
+          <Col lg={12} xs={24}>
+            <h3>Expiry Date</h3>
+            <p>{moment(account?.expiryDate).format("DD MMMM, YYYY")}</p>
           </Col>
         </Row>
       </div>

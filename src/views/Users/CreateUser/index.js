@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../services/api";
 import { Button, DatePicker, Form, Input, Spin, message } from "antd";
 import dayjs from "dayjs";
+import { PlusOutlined } from "@ant-design/icons";
 const { RangePicker } = DatePicker;
 
 const CreateUser = () => {
@@ -138,7 +139,7 @@ const CreateUser = () => {
 
               <Form.Item
                 name="password"
-                label="Enter Password"
+                label=" Password"
                 rules={[
                   {
                     required: true,
@@ -152,11 +153,24 @@ const CreateUser = () => {
 
               <Form.Item
                 name="account"
-                label="Account Id "
+                label="Account ID"
                 rules={[
                   {
                     required: true,
                     message: "Please input Account Id!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                name="computerSerial"
+                label="Drive Serial "
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Drive Serial!",
                   },
                 ]}
               >
@@ -215,7 +229,7 @@ const CreateUser = () => {
 
           <Form.Item
             name="password"
-            label="Enter Password"
+            label="Password"
             rules={[
               {
                 required: true,
@@ -228,12 +242,25 @@ const CreateUser = () => {
           </Form.Item>
 
           <Form.Item
-            name="account"
-            label="Account Id "
+            name="account_id"
+            label="Account ID"
             rules={[
               {
                 required: true,
                 message: "Please input Account Id!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="computerSerial"
+            label="Drive Serial "
+            rules={[
+              {
+                required: true,
+                message: "Please input Drive Serial!",
               },
             ]}
           >
@@ -247,7 +274,15 @@ const CreateUser = () => {
               htmlType="submit"
               style={{ marginLeft: "10px" }}
             >
-              {params?.id !== "create" ? "Edit" : "Create"}
+              {params?.id !== "create" ? "Edit" : "Create User"}
+            </Button>
+            <Button
+              type="primary"
+              style={{ marginLeft: "10px" }}
+              icon={<PlusOutlined />}
+              onClick={() => navigate("/account/create")}
+            >
+              Create New Account
             </Button>
           </Form.Item>
         </Form>
